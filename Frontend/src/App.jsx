@@ -5,7 +5,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import VerifyOTP from "./pages/VerifyOTP";
 import SystemAdminDashboard from "./pages/SystemAdmin/SystemAdminDashboard";
 import SystemAdminPanel from "./pages/SystemAdmin/SystemAdminPanel";
-// import NormalUserDashboard from "./pages/NormalUser/NormalUserDashboard";
+import NormalUserDashboard from "./pages/NormalUser/NormalUserDashboard";
 // import StoreOwnerDashboard from "./pages/StoreOwner/StoreOwnerDashboard";
 
 import EnterStoreDetails from "./pages/StoreOwner/EnterStoreDetails";
@@ -13,6 +13,8 @@ import AddUser from "./pages/SystemAdmin/AddUser";
 import UserDetails from "./pages/SystemAdmin/UserDetails";
 import StoreManager from "./pages/SystemAdmin/StoreManager";
 import Logout from "./pages/Logout";
+
+import StoreRatingManager from "./pages/NormalUser/StoreRatingManager";
 
 
 import "./index.css";
@@ -42,6 +44,10 @@ function AppWrapper() {
 
         {/* Store Owner Routes */}
         <Route path="/enter-store-details" element={<EnterStoreDetails/>}/>
+
+        {/* Normal User Routes */}
+        <Route path="/normal-user" element={<NormalUserDashboard/>}/>
+        <Route path="/normal-user/store" element={<StoreRatingManager/>}/>
       </Routes>
     </div>
   );
