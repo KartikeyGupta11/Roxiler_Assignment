@@ -1,35 +1,56 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import ForgotPassword from "./pages/ForgotPassword";
+import VerifyOTP from "./pages/VerifyOTP";
+import SystemAdminDashboard from "./pages/SystemAdmin/SystemAdminDashboard";
+import SystemAdminPanel from "./pages/SystemAdmin/SystemAdminPanel";
+// import NormalUserDashboard from "./pages/NormalUser/NormalUserDashboard";
+// import StoreOwnerDashboard from "./pages/StoreOwner/StoreOwnerDashboard";
 
-function App() {
-  const [count, setCount] = useState(0)
+import EnterStoreDetails from "./pages/StoreOwner/EnterStoreDetails";
+import AddUser from "./pages/SystemAdmin/AddUser";
+import UserDetails from "./pages/SystemAdmin/UserDetails";
+import StoreManager from "./pages/SystemAdmin/StoreManager";
+import Logout from "./pages/Logout";
+
+
+import "./index.css";
+import { Toaster } from "react-hot-toast";
+
+
+
+function AppWrapper() {
+  const location = useLocation();
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="w-full min-h-screen bg-black">
+      <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
+      <Routes>
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/logout" element={<Logout/>}/>
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/verify-otp" element={<VerifyOTP />} />
+
+        {/* System Admin Routes */}
+        <Route path="/system-admin" element={<SystemAdminDashboard/>}/>
+        <Route path="/admin/admin-panel" element={<SystemAdminPanel/>}/>
+        <Route path="/admin/add-user" element={<AddUser/>}/>
+        <Route path="/admin/user-details" element={<UserDetails/>}/>
+        <Route path="/admin/store-manager" element={<StoreManager/>}/>
+
+        {/* Store Owner Routes */}
+        <Route path="/enter-store-details" element={<EnterStoreDetails/>}/>
+      </Routes>
+    </div>
+  );
 }
 
-export default App
+export default function App() {
+  return (
+    <Router>
+      <AppWrapper />
+    </Router>
+  );
+}

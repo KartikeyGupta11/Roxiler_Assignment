@@ -1,0 +1,144 @@
+"use client";
+import React, { useState, createContext, useContext } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { IconMenu2, IconX } from "@tabler/icons-react";
+import clsx from "clsx";
+import { twMerge } from "tailwind-merge";
+
+// Utility function (same as lib/utils)
+export function cn(...inputs) {
+  return twMerge(clsx(inputs));
+}
+
+// Context for sidebar state
+const SidebarContext = createContext(undefined);
+
+export const useSidebar = () => {
+  const context = useContext(SidebarContext);
+  if (!context) {
+    throw new Error("useSidebar must be used within a SidebarProvider");
+  }
+  return context;
+};
+
+// Provider
+export const SidebarProvider = ({
+  children,
+  open: openProp,
+  setOpen: setOpenProp,
+  animate = true,
+}) => {
+  const [openState, setOpenState] = useState(false);
+  const open = openProp !== undefined ? openProp : openState;
+  const setOpen = setOpenProp !== undefined ? setOpenProp : setOpenState;
+
+  return (
+    <SidebarContext.Provider value={{ open, setOpen, animate }}>
+      {children}
+    </SidebarContext.Provider>
+  );
+};
+
+// Sidebar wrapper
+export const Sidebar = ({ children, open, setOpen, animate }) => {
+  return (
+    <SidebarProvider open={open} setOpen={setOpen} animate={animate}>
+      {children}
+    </SidebarProvider>
+  );
+};
+
+// Main sidebar body (desktop + mobile)
+export const SidebarBody = (props) => {
+  return (
+    <>
+      <DesktopSidebar {...props} />
+      <MobileSidebar {...props} />
+    </>
+  );
+};
+
+// Desktop version (hover to expand)
+export const DesktopSidebar = ({ className, children, ...props }) => {
+  const { open, setOpen, animate } = useSidebar();
+  return (
+    <motion.div
+      className={cn(
+        "h-full px-4 py-4 hidden md:flex md:flex-col bg-white shadow-lg dark:bg-neutral-800 w-[240px] shrink-0",
+        className
+      )}
+      animate={{
+        width: animate ? (open ? "240px" : "60px") : "240px",
+      }}
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+      {...props}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+// Mobile version (slide in/out)
+export const MobileSidebar = ({ className, children, ...props }) => {
+  const { open, setOpen } = useSidebar();
+  return (
+    <div
+      className="h-10 px-4 py-4 flex flex-row md:hidden items-center justify-between bg-white shadow-lg dark:bg-neutral-800 w-full"
+      {...props}
+    >
+      <IconMenu2
+        className="text-neutral-800 dark:text-neutral-200 cursor-pointer"
+        onClick={() => setOpen(!open)}
+      />
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ x: "-100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: "-100%", opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className={cn(
+              "fixed h-full w-full inset-0 bg-white dark:bg-neutral-900 p-10 z-[100] flex flex-col justify-between",
+              className
+            )}
+          >
+            <div
+              className="absolute right-10 top-10 z-50 text-neutral-800 dark:text-neutral-200 cursor-pointer"
+              onClick={() => setOpen(false)}
+            >
+              <IconX />
+            </div>
+            {children}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+// Single link (basic version)
+export const SidebarLink = ({ link, className, ...props }) => {
+  const { open, animate } = useSidebar();
+  return (
+    <a
+      href={link.href}
+      className={cn(
+        "flex items-center gap-2 py-2 px-3 rounded-md hover:bg-gray-100 text-gray-700 dark:text-gray-200 group/sidebar",
+        className
+      )}
+      {...props}
+    >
+      {link.icon}
+      <motion.span
+        animate={{
+          display: animate ? (open ? "inline-block" : "none") : "inline-block",
+          opacity: animate ? (open ? 1 : 0) : 1,
+        }}
+        className="text-sm whitespace-pre inline-block"
+      >
+        {link.label}
+      </motion.span>
+    </a>
+  );
+};
