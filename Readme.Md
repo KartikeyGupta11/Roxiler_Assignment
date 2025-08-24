@@ -1,5 +1,10 @@
 # FullStack Intern Coding Challenge – Roxiler Assignment
 
+## Demo Video
+
+You can watch a short demo of the application here:
+[Watch Demo Video on Google Drive](https://drive.google.com/file/d/1Om6-X60o1uG019IpwrCF-mwfvYtd75sr/view?usp=sharing)
+
 ## Tech Stack
 
 - **Backend:** Express.js
