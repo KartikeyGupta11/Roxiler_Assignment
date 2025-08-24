@@ -164,7 +164,7 @@ export default function SystemAdminStores() {
 
         <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
           <h2 className="text-2xl font-semibold mb-4">Stores</h2>
-          <ul className="space-y-3">
+          <ul className="space-y-3 max-h-[500px] overflow-y-auto">
             {stores.map((s) => (
               <li
                 key={s._id}

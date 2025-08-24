@@ -53,19 +53,19 @@ export default function UserDetails() {
   };
 
   const renderCards = (list) => (
-    <div className="flex gap-4 overflow-x-auto pb-2">
-      {list.map((user) => (
-        <div
-          key={user._id}
-          className="border rounded-lg p-4 min-w-[220px] bg-white shadow cursor-pointer hover:shadow-md transition"
-          onClick={() => handleCardClick(user)}
-        >
-          <p className="font-semibold">{user.name}</p>
-          <p className="text-sm text-gray-500">{user.email}</p>
-        </div>
-      ))}
-    </div>
-  );
+  <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+    {list.map((user) => (
+      <div
+        key={user._id}
+        className="border rounded-lg p-4 min-w-[220px] bg-white shadow cursor-pointer hover:shadow-md transition"
+        onClick={() => handleCardClick(user)}
+      >
+        <p className="font-semibold">{user.name}</p>
+        <p className="text-sm text-gray-500">{user.email}</p>
+      </div>
+    ))}
+  </div>
+);
 
   return (
     <div className="flex min-h-screen bg-white">
