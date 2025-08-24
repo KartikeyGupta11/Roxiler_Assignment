@@ -2,7 +2,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-export default function ForgotPassword() {
+export default function NewPassword() {
     const [email, setEmail] = useState("");
     const navigate = useNavigate();
 
@@ -37,7 +37,7 @@ export default function ForgotPassword() {
     return(
         <div className="min-h-screen flex items-center justify-center bg-[#f4f4f4]">
             <div className="bg-white shadow-lg p-6 rounded-lg w-full max-w-md">
-                <h2 className="text-xl font-bold mb-4">Forgot Password</h2>
+                <h2 className="text-xl font-bold mb-4">Update Passowrd</h2>
 
                 <form onSubmit={handleSendOTP} className="space-y-4">
                     <input

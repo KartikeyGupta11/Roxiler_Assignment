@@ -94,7 +94,6 @@ export default function StoreRatingManager() {
           <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
         );
       } else if (rating >= i - 0.5) {
-        // Half star: use a background gradient or clip-path for half color
         stars.push(
           <div key={i} className="relative w-5 h-5">
             <Star className="absolute top-0 left-0 w-5 h-5 text-gray-300" />
@@ -122,7 +121,6 @@ export default function StoreRatingManager() {
             <div className="bg-red-100 text-red-700 p-3 rounded-lg">{error}</div>
           )}
 
-          {/* Filters */}
           <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
             <h2 className="text-xl font-semibold mb-3">Filter Stores</h2>
             <div className="grid grid-cols-2 gap-4">
@@ -147,7 +145,6 @@ export default function StoreRatingManager() {
             </div>
           </div>
 
-          {/* Store List */}
           <div className="bg-gray-50 p-4 rounded-lg shadow-sm flex flex-col">
             <h2 className="text-2xl font-semibold mb-4">Stores</h2>
             <div className="flex-1 max-h-[calc(100vh-300px)] overflow-y-auto pr-2">

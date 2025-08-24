@@ -68,18 +68,70 @@ export default function SystemAdminStores() {
     }
   };
 
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      if (rating >= i) {
+        stars.push(
+          <svg
+            key={i}
+            className="w-4 h-4 text-yellow-400 fill-yellow-400"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.951a1 1 0 00.95.69h4.148c.969 0 1.371 1.24.588 1.81l-3.36 2.44a1 1 0 00-.364 1.118l1.286 3.951c.3.921-.755 1.688-1.538 1.118l-3.36-2.44a1 1 0 00-1.176 0l-3.36 2.44c-.783.57-1.838-.197-1.538-1.118l1.286-3.951a1 1 0 00-.364-1.118L2.027 9.378c-.783-.57-.38-1.81.588-1.81h4.148a1 1 0 00.95-.69l1.286-3.951z" />
+          </svg>
+        );
+      } else if (rating >= i - 0.5) {
+        stars.push(
+          <div key={i} className="relative w-4 h-4 inline-block">
+            <svg
+              className="absolute top-0 left-0 w-4 h-4 text-gray-300"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.951a1 1 0 00.95.69h4.148c.969 0 1.371 1.24.588 1.81l-3.36 2.44a1 1 0 00-.364 1.118l1.286 3.951c.3.921-.755 1.688-1.538 1.118l-3.36-2.44a1 1 0 00-1.176 0l-3.36 2.44c-.783.57-1.838-.197-1.538-1.118l1.286-3.951a1 1 0 00-.364-1.118L2.027 9.378c-.783-.57-.38-1.81.588-1.81h4.148a1 1 0 00.95-.69l1.286-3.951z" />
+            </svg>
+            <svg
+              className="absolute top-0 left-0 w-4 h-4 text-yellow-400 fill-yellow-400"
+              style={{ clipPath: "inset(0 50% 0 0)" }}
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.951a1 1 0 00.95.69h4.148c.969 0 1.371 1.24.588 1.81l-3.36 2.44a1 1 0 00-.364 1.118l1.286 3.951c.3.921-.755 1.688-1.538 1.118l-3.36-2.44a1 1 0 00-1.176 0l-3.36 2.44c-.783.57-1.838-.197-1.538-1.118l1.286-3.951a1 1 0 00-.364-1.118L2.027 9.378c-.783-.57-.38-1.81.588-1.81h4.148a1 1 0 00.95-.69l1.286-3.951z" />
+            </svg>
+          </div>
+        );
+      } else {
+        stars.push(
+          <svg
+            key={i}
+            className="w-4 h-4 text-gray-300"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.951a1 1 0 00.95.69h4.148c.969 0 1.371 1.24.588 1.81l-3.36 2.44a1 1 0 00-.364 1.118l1.286 3.951c.3.921-.755 1.688-1.538 1.118l-3.36-2.44a1 1 0 00-1.176 0l-3.36 2.44c-.783.57-1.838-.197-1.538-1.118l1.286-3.951a1 1 0 00-.364-1.118L2.027 9.378c-.783-.57-.38-1.81.588-1.81h4.148a1 1 0 00.95-.69l1.286-3.951z" />
+          </svg>
+        );
+      }
+    }
+    return <div className="flex gap-1">{stars}</div>;
+  };
+
   return (
     <div className="flex min-h-screen bg-white">
       <SystemAdminSidebar />
 
       <div className="flex-1 p-6 flex gap-6">
-        {/* Left Section */}
         <div className="w-2/3 flex flex-col gap-6">
           {error && (
             <div className="bg-red-100 text-red-700 p-3 rounded-lg">{error}</div>
           )}
 
-          {/* Filters */}
           <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
             <h2 className="text-xl font-semibold mb-3">Filter Stores</h2>
             <div className="grid grid-cols-3 gap-4">
@@ -109,29 +161,28 @@ export default function SystemAdminStores() {
             </div>
           </div>
 
-          {/* Store List */}
-          <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
-            <h2 className="text-2xl font-semibold mb-4">Stores</h2>
-            <ul className="space-y-3">
-              {stores.map((s) => (
-                <li
-                  key={s._id}
-                  className="border p-4 rounded-lg shadow-sm flex justify-between"
-                >
-                  <div>
-                    <p className="font-bold">{s.storeName}</p>
-                    <p className="text-sm text-gray-600">
-                      Owner: {s.userId.name} ({s.userId.email})
-                    </p>
-                    <p className="text-sm">{s.storeLocation}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
+
+        <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
+          <h2 className="text-2xl font-semibold mb-4">Stores</h2>
+          <ul className="space-y-3">
+            {stores.map((s) => (
+              <li
+                key={s._id}
+                className="border p-4 rounded-lg shadow-sm flex flex-col"
+              >
+              <p className="font-bold">{s.storeName}</p>
+              <p className="text-sm text-gray-600">
+                Owner: {s.userId.name} ({s.userId.email})
+              </p>
+              <p className="text-sm">{s.storeLocation}</p>
+              <div className="mt-1">{renderStars(s.storeRating || 0)}</div>
+            </li>
+            ))}
+          </ul>
         </div>
 
-        {/* Right Section */}
+        </div>
+
         <div className="w-1/3 bg-gray-50 p-4 rounded-lg shadow-sm h-fit">
           <h2 className="text-xl font-semibold mb-3">Add New Store</h2>
           <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4">

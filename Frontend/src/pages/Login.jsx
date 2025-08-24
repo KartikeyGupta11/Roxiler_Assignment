@@ -35,9 +35,9 @@ export default function Login() {
       toast.success("Login successful!");
 
       const role = data.user.role;
-      if (role === "SystemAdmin") navigate("/system-admin");
-      else if (role === "StoreOwner") navigate("/store-owner");
-      else if (role === "NormalUser") navigate("/normal-user");
+      if (role === "SystemAdmin") navigate("/admin/admin-panel");
+      else if (role === "StoreOwner") navigate("/store-owner/main-panel");
+      else if (role === "NormalUser") navigate("/normal-user/store");
     } catch (error) {
       console.error("Login error:", error);
       toast.error("An error occurred while logging in. Please try again.");
@@ -49,7 +49,7 @@ export default function Login() {
       <div className="w-full md:w-1/2 flex items-center justify-center p-10 bg-white">
         <div className="w-full max-w-md p-8 rounded-lg shadow-lg border border-gray-200">
           <div className="flex flex-col items-center mb-6">
-            <div className="text-blue-600 text-4xl font-extrabold mb-2">D</div>
+            <div className="text-blue-600 text-4xl font-extrabold mb-2">Roxiler</div>
             <h2 className="text-2xl font-semibold text-gray-800">Welcome back!</h2>
             <p className="text-gray-500 text-sm">
               Don’t have an account?{" "}
@@ -80,24 +80,6 @@ export default function Login() {
               className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
 
-            <div className="flex justify-between text-sm text-gray-600">
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  className="mr-2"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                />
-                Remember me
-              </label>
-              <span
-                className="text-blue-600 hover:underline cursor-pointer"
-                onClick={() => navigate("/forgot-password")}
-              >
-                Forgot password?
-              </span>
-            </div>
-
             <button
               type="submit"
               className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition"
@@ -106,18 +88,6 @@ export default function Login() {
             </button>
           </form>
 
-          <div className="flex items-center my-4">
-            <div className="flex-grow h-px bg-gray-200"></div>
-            <span className="mx-3 text-gray-400 text-sm">OR</span>
-            <div className="flex-grow h-px bg-gray-200"></div>
-          </div>
-
-          <a
-            href="#"
-            className="text-blue-600 text-sm font-medium hover:underline block text-center"
-          >
-            Log in with SSO
-          </a>
         </div>
       </div>
 

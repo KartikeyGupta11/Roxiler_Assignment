@@ -2,10 +2,9 @@
 import { NavLink } from "react-router-dom";
 import { motion } from "motion/react";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import {
   IconArrowLeft,
-  IconBuildingStore,
+  IconLayoutDashboard,
   IconLock
 } from "@tabler/icons-react";
 import { Sidebar, SidebarBody, useSidebar } from "../ui/Sidebar";
@@ -13,7 +12,7 @@ import { cn } from "../ui/Sidebar";
 import { getUser } from "../../utils/authUtils";
 
 const links = [
-  { label: "Store Manager", href: "/normal-user/store", icon: <IconBuildingStore className="h-5 w-5 shrink-0 default" /> },
+  { label: "Dashboard", href: "/store-owner/main-panel", icon: <IconLayoutDashboard className="h-5 w-5 shrink-0" /> },
   { label: "Update Password", href: "/update-password", icon: <IconLock className="h-5 w-5 shrink-0" /> },
   { label: "Logout", href: "/logout", icon: <IconArrowLeft className="h-5 w-5 shrink-0" /> },
 ];
@@ -47,7 +46,7 @@ const RouterSidebarLink = ({ link }) => {
   );
 };
 
-export default function NormalUserSidebar() {
+export default function StoreOwnerSidebar() {
   const [open, setOpen] = useState(false);
 
   const user = {
@@ -58,7 +57,6 @@ export default function NormalUserSidebar() {
   return (
     <Sidebar open={open} setOpen={setOpen}>
       <SidebarBody className="flex flex-col justify-between h-screen bg-black text-white">
-        {/* Top links */}
         <div className="flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
           {open ? <Logo /> : <LogoIcon />}
           <div className="mt-8 flex flex-col gap-2">

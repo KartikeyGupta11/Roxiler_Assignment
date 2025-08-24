@@ -5,11 +5,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import {
   IconArrowLeft,
-  IconBrandTabler,
-  IconSettings,
-  IconUserBolt,
-  IconChalkboard,
-  IconSchool,
   IconUsers,
   IconUserPlus,
   IconBuildingStore,
@@ -18,7 +13,6 @@ import {
 import { Sidebar, SidebarBody, useSidebar } from "../ui/Sidebar";
 import { cn } from "../ui/Sidebar";
 import { getUser } from "../../utils/authUtils";
-// import AdminUser from "../../assets/User.png";
 
 const links = [
   { label: "Dashboard", href: "/admin/admin-panel", icon: <IconLayoutDashboard className="h-5 w-5 shrink-0" /> },
@@ -28,7 +22,6 @@ const links = [
   { label: "Logout", href: "/logout", icon: <IconArrowLeft className="h-5 w-5 shrink-0" /> },
 ];
 
-// Link with react-router-dom active styles
 const RouterSidebarLink = ({ link }) => {
   const { open, animate } = useSidebar();
   return (
@@ -64,27 +57,12 @@ export default function SystemAdminSidebar() {
 
   const user = {
     name: getUser()?.name,
-    image: "", // replace with user image URL if available
   };
 
-  useEffect(() => {
-    const checkProfile = async (id) => {
-      try {
-        const { data } = await axios.get(`/api/admin/profile/check/profile-completeness-Admin/${id}`, {
-          withCredentials: true,
-        });
-        setIncomplete(!data.complete);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    checkProfile();
-  }, []);
 
   return (
     <Sidebar open={open} setOpen={setOpen}>
       <SidebarBody className="flex flex-col justify-between h-screen bg-black text-white">
-        {/* Top links */}
         <div className="flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
           {open ? <Logo /> : <LogoIcon />}
           <div className="mt-8 flex flex-col gap-2">
@@ -94,34 +72,10 @@ export default function SystemAdminSidebar() {
           </div>
         </div>
 
-        {/* Profile at bottom */}
         <div className="p-1 border-t border-neutral-700 relative">
-          <NavLink
-            to="/admin/profile"
-            className="flex items-center gap-3"
-          >
-            {/* {user.image ? (
-              <img
-                src={user.image}
-                alt="User"
-                className="h-5 w-5 rounded-full object-cover mt-3"
-              />
-            ) : (
-              <img
-                src={AdminUser}
-                alt="User"
-                className="h-5 w-5 rounded-full object-cover mt-3"
-              />
-            )} */}
-            {open && (
+          {open && (
               <span className="text-sm font-semibold mt-4">{user.name}</span>
-            )}
-
-            {/* 🔴 Red Dot Notification
-            {incomplete && (
-              <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
-            )} */}
-          </NavLink>
+          )}
         </div>
       </SidebarBody>
     </Sidebar>

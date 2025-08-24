@@ -5,12 +5,10 @@ import { IconMenu2, IconX } from "@tabler/icons-react";
 import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
 
-// Utility function (same as lib/utils)
 export function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
 
-// Context for sidebar state
 const SidebarContext = createContext(undefined);
 
 export const useSidebar = () => {
@@ -21,7 +19,6 @@ export const useSidebar = () => {
   return context;
 };
 
-// Provider
 export const SidebarProvider = ({
   children,
   open: openProp,
@@ -39,7 +36,6 @@ export const SidebarProvider = ({
   );
 };
 
-// Sidebar wrapper
 export const Sidebar = ({ children, open, setOpen, animate }) => {
   return (
     <SidebarProvider open={open} setOpen={setOpen} animate={animate}>
@@ -48,7 +44,6 @@ export const Sidebar = ({ children, open, setOpen, animate }) => {
   );
 };
 
-// Main sidebar body (desktop + mobile)
 export const SidebarBody = (props) => {
   return (
     <>
@@ -58,7 +53,6 @@ export const SidebarBody = (props) => {
   );
 };
 
-// Desktop version (hover to expand)
 export const DesktopSidebar = ({ className, children, ...props }) => {
   const { open, setOpen, animate } = useSidebar();
   return (
@@ -79,7 +73,6 @@ export const DesktopSidebar = ({ className, children, ...props }) => {
   );
 };
 
-// Mobile version (slide in/out)
 export const MobileSidebar = ({ className, children, ...props }) => {
   const { open, setOpen } = useSidebar();
   return (
@@ -117,7 +110,6 @@ export const MobileSidebar = ({ className, children, ...props }) => {
   );
 };
 
-// Single link (basic version)
 export const SidebarLink = ({ link, className, ...props }) => {
   const { open, animate } = useSidebar();
   return (

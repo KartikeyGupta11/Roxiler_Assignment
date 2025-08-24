@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import toast from "react-hot-toast";
 import SystemAdminSidebar from "../../components/Sidebars/SystemAdminSidebar";
 
 export default function AddUser() {
@@ -16,16 +17,63 @@ export default function AddUser() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const validateForm = () => {
+    if (!formData.name || formData.name.length < 3 || formData.name.length > 60) {
+      toast.error("Name must be between 3 and 60 characters");
+      return false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      toast.error("Enter a valid email address");
+      return false;
+    }
+
+    if (!formData.address || formData.address.length > 400) {
+      toast.error("Address cannot exceed 400 characters");
+      return false;
+    }
+
+    if (!formData.role) {
+      toast.error("Please select a role");
+      return false;
+    }
+
+    if (formData.role === "StoreOwner") {
+      if (!formData.storeName || formData.storeName.length < 2) {
+        toast.error("Store name must be at least 2 characters");
+        return false;
+      }
+      if (!formData.storeLocation || formData.storeLocation.length < 2) {
+        toast.error("Store location must be at least 2 characters");
+        return false;
+      }
+    }
+
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateForm()) return;
+
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/admin/add-user`,
         formData
       );
-      alert(res.data.message);
+      toast.success(res.data.message || "User added successfully!");
+      setFormData({
+        name: "",
+        email: "",
+        address: "",
+        role: "NormalUser",
+        storeName: "",
+        storeLocation: "",
+      });
     } catch (err) {
-      alert(err.response?.data?.message || "Error adding user");
+      toast.error(err.response?.data?.message || "Error adding user");
     }
   };
 

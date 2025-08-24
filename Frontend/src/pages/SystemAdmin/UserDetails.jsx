@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
+import { Star } from "lucide-react";
 import SystemAdminSidebar from "../../components/Sidebars/SystemAdminSidebar";
 
 export default function UserDetails() {
@@ -23,6 +24,32 @@ export default function UserDetails() {
 
   const closeModal = () => {
     setSelectedUser(null);
+  };
+
+  const renderOverallStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      if (rating >= i) {
+        stars.push(
+          <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+        );
+      } else if (rating >= i - 0.5) {
+        stars.push(
+          <div key={i} className="relative w-5 h-5">
+            <Star className="absolute top-0 left-0 w-5 h-5 text-gray-300" />
+            <Star
+              className="absolute top-0 left-0 w-5 h-5 text-yellow-400 fill-yellow-400"
+              style={{ clipPath: "inset(0 50% 0 0)" }}
+            />
+          </div>
+        );
+      } else {
+        stars.push(
+          <Star key={i} className="w-5 h-5 text-gray-300" />
+        );
+      }
+    }
+    return <div className="flex gap-1">{stars}</div>;
   };
 
   const renderCards = (list) => (
@@ -87,9 +114,6 @@ export default function UserDetails() {
                 <p>
                   <strong>Address:</strong> {selectedUser.address}
                 </p>
-                <p>
-                  <strong>Role:</strong> {selectedUser.role}
-                </p>
 
                 {selectedUser.role === "StoreOwner" && (
                   <>
@@ -97,11 +121,11 @@ export default function UserDetails() {
                       <strong>Store Name:</strong> {selectedUser.storeName}
                     </p>
                     <p>
-                      <strong>Store Location:</strong>{" "}
-                      {selectedUser.storeLocation}
+                      <strong>Store Location:</strong> {selectedUser.storeLocation}
                     </p>
-                    <p>
-                      <strong>Rating:</strong> {selectedUser.storeRating}
+                    <p className="flex items-center gap-2">
+                      <strong>Rating:</strong> 
+                      {renderOverallStars(selectedUser.storeRating || 0)}
                     </p>
                   </>
                 )}
